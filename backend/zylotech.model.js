@@ -13,6 +13,9 @@ let zylotech = new Schema({
     },
     time:{
         type:Number
+    },
+    isHidden:{
+        type:false
     }
 })
 

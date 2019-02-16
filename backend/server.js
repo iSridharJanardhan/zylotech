@@ -23,8 +23,8 @@ routes.route('/events').get(function(req, res){
             console.log(err);
         }
         else{
-            res.json({
-                zylotech
+            res.status(200).json({
+                zylotech,
             })
         }
     })

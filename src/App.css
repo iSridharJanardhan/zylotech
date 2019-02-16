@@ -26,6 +26,9 @@
 .uk-card-default {
   box-shadow: none !important;
   height:60vh;
+}
+.right{
+ height:40vh;
   overflow-y: auto;
 }
 .uk-text-center{

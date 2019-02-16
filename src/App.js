@@ -15,9 +15,10 @@ class App extends Component {
       task_desc: "",
       date: Math.floor(Date() / 1000),
       time: new Date().getTime(),
-      tasklist: []
+      tasklist: [],
+      isHidden: true
     };
-    this.myRef = React.createRef();
+
     this.handleChangedate = this.handleChangedate.bind(this);
     this.handleChangetime = this.handleChangetime.bind(this);
     this.eventnamehandleChange = this.eventnamehandleChange.bind(this);
@@ -30,6 +31,7 @@ class App extends Component {
   async componentDidMount() {
     const response = await axios.get("http://localhost:4000/events");
     this.setState({ tasklist: response.data.zylotech.reverse() });
+    console.log(this.state.tasklist);
   }
 
   handleChangedate(date) {
@@ -56,7 +58,7 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
+    this.setState(prevState => ({ isHidden: !prevState.isHidden }));
     var data = {
       task_name: this.state.task_name,
       task_desc: this.state.task_desc,
@@ -73,6 +75,7 @@ class App extends Component {
     })
       .then(function(response) {
         //handle success
+        alert('Task was Updated Succefully')
         console.log(response);
       })
       .catch(function(response) {
@@ -81,6 +84,8 @@ class App extends Component {
       });
 
     window.location.reload();
+
+    
   }
 
   handleClick = async () => {
@@ -126,8 +131,8 @@ class App extends Component {
             <div>
               <div class="uk-card uk-card-default uk-card-body">
                 <h2>Enter Details Here</h2>
+                
                 {/*Input Forms*/}
-
                 <form onSubmit={this.handleSubmit}>
                   <div class="uk-margin">
                     <input
@@ -190,14 +195,14 @@ class App extends Component {
             </div>
             {/*The task list COntainer*/}
 
-            <div>
+            <div >
               <div class="uk-card uk-card-default uk-card-body">
                 <h2>Total Tasks : {this.state.tasklist.length}</h2>
                 <div
                   class="uk-child-width-expand@s uk-text-center"
                   uk-grid="true"
                 >
-                  <div>
+                  <div >
                     <input
                       class="uk-button uk-button-primary"
                       type="submit"
@@ -214,8 +219,8 @@ class App extends Component {
                     />
                   </div>
                 </div>
-                <div>
-                  <table ref={this.myRef} class="uk-table uk-table-divider">
+                <div class="right">
+                  <table ref={this.myRef} class="uk-table uk-table-divider uk-table-striped">
                     <thead>
                       <tr>
                         <th style={{ textAlign: "center" }}>Task Name</th>
@@ -226,9 +231,10 @@ class App extends Component {
                     <tbody>
                       {data.map(item => {
                         return (
+                          
                           <tr>
-                            <td style={{ textAlign: "center" }}>
-                              {item.task_name}
+                            <td style={{ textAlign: "center" }} >
+                               {item.task_name}
                             </td>
                             <td style={{ textAlign: "center" }}>
                               {moment(item.date).format("DD-MM-YYYY")}
